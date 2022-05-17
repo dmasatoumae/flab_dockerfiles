@@ -1,0 +1,25 @@
+version: "2.3"
+services:
+  test:
+    image: flab-cv
+    container_name: flab-cv
+    build:
+      context: .
+      dockerfile: Dockerfile
+    runtime: nvidia
+    stdin_open: true
+    ipc: host
+    tty: true
+    privileged: true
+    network_mode: "host"
+    environment:
+      - DISPLAY
+      - XAUTHORITY
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+      - QT_X11_NO_MITSHM=1
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /dev:/dev
+      - $HOME/shared:/shared
+    command: /bin/bash
